@@ -1,4 +1,4 @@
-package section2;
+package thread.creation;
 
 public class ThreadExceptionHandlerExample {
 
