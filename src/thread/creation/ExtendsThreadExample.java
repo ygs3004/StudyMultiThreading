@@ -1,6 +1,6 @@
 package thread.creation;
 
-public class ExtendsThread {
+public class ExtendsThreadExample {
 
     public static void main(String[] args) {
         Thread thread = new NewThread();

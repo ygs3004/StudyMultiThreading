@@ -1,6 +1,6 @@
 package thread.creation;
 
-public class BasicThread {
+public class BasicThreadExample {
 
     public static void main(String[] args) throws InterruptedException {
         Thread thread = new Thread(new Runnable() {
