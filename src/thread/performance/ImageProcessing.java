@@ -4,7 +4,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +21,7 @@ public class ImageProcessing {
         long startTime = System.currentTimeMillis();
 
         // recolorSingleThreaded(originalImage, resultImage);
-        int numberOfThreads = 6;
+        int numberOfThreads = 4;
         recolorMultiThreaded(originalImage, resultImage, numberOfThreads);
 
         long endTime = System.currentTimeMillis();
