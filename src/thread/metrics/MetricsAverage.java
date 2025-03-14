@@ -2,7 +2,7 @@ package thread.metrics;
 
 import java.util.Random;
 
-public class MetricsMain {
+public class MetricsAverage {
 
     public static void main(String[] args) {
 
