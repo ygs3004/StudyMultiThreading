@@ -5,7 +5,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-public class Main {
+public class Inventory {
 
     private static final int HIGHEST_PRICE = 1000;
 
