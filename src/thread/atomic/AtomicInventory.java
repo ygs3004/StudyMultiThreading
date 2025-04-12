@@ -1,6 +1,8 @@
-package thread.dataShare;
+package thread.atomic;
 
-public class SynchronizedCriticalSection {
+import java.util.concurrent.atomic.AtomicInteger;
+
+public class AtomicInventory {
 
     public static void main(String[] args) throws InterruptedException {
         InventoryCounter inventoryCounter = new InventoryCounter();
@@ -13,7 +15,7 @@ public class SynchronizedCriticalSection {
         incrementingThread.join();
         decrementingThread.join();
 
-        System.out.println("items: " + inventoryCounter.getItems()); // => 0 이 아님, ++, -- 코드 동작에서 공유된 items 값의 변화로 인해 예상하지 못한 값의 상태가 적용됨
+        System.out.println("items: " + inventoryCounter.getItems());
     }
 
     private static class IncrementingThread extends Thread {
@@ -27,13 +29,11 @@ public class SynchronizedCriticalSection {
         @Override
         public void run() {
             for (int i = 0; i < 10000; i++) {
-                // inventoryCounter.increment();
-                inventoryCounter.lockIncrement();
+                inventoryCounter.increment();
             }
         }
 
     }
-
 
     private static class DecrementingThread extends Thread {
 
@@ -46,8 +46,7 @@ public class SynchronizedCriticalSection {
         @Override
         public void run() {
             for (int i = 0; i < 10000; i++) {
-                // inventoryCounter.decrement();
-                inventoryCounter.lockDecrement();
+                inventoryCounter.decrement();
             }
         }
 
@@ -55,40 +54,17 @@ public class SynchronizedCriticalSection {
 
 
     private static class InventoryCounter{
-        private int items = 0;
+        private AtomicInteger items = new AtomicInteger(0);
 
-        Object lock = new Object();
-
-        public void lockIncrement() {
-            synchronized (this.lock) {
-                items++;
-            }
+        public void increment() {
+            items.getAndIncrement();
         }
 
-        public void lockDecrement() {
-            synchronized (this.lock) {
-                items--;
-            }
+        public void decrement() {
+            items.decrementAndGet();
         }
-
-        public synchronized void increment() {
-            items++;
-            // ++ 의 동작
-            // 1. 현재값을 얻는다
-            // 2. 현재의 값에 1을 더한다..
-            // 3. 현재의 값을 items 에 저장한다.
-        }
-
-        public synchronized void decrement() {
-            items--;
-            // -- 의 동작
-            // 1. 현재값을 얻는다
-            // 2. 현재의 값에 1을 뺀다..
-            // 3. 현재의 값을 items 에 저장한다.
-        }
-
         public int getItems() {
-            return this.items;
+            return this.items.get();
         }
     }
 
