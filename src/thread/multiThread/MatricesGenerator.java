@@ -1,4 +1,4 @@
-package thread.object;
+package thread.multiThread;
 
 import java.io.File;
 import java.io.FileWriter;
